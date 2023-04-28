@@ -75,7 +75,7 @@ On the companion computer you can then pull the docker image with
 The ready-made docker image is available under `antbre/px4-uros-agent`
 After pulling this can be run with the following arguments:
 
-    docker run -it --privileged --rm --net host -v /dev/shm:/dev/shm antbre/tactile-drone-rpi
+    docker run --rm --net=host --privileged antbre/px4-uros-agent serial --dev /dev/ttyAMA0  -b 921600
 
 Where `-it` opens it as an interactive container, `--privileged` gives it the required permissions, `--rm` is optional and indicates that the container is deleted after being stopped, `--net host` specifies the required network environment to let the ros2 communication work, and `-v` provides the required device permissions.  
 
