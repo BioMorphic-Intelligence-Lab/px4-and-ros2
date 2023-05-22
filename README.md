@@ -41,10 +41,15 @@ Which should result in a message that the client is already running.
 In the above command `-t` defines the communication protocol (in this case `serial`), `-d` defines the device we're using to communicate (i.e. which port, where `/dev/ttyS3 == TELEM2` according to the [port mapping](https://docs.px4.io/main/en/flight_controller/pixhawk6c.html)), and `-d` defines the baud rate. 
 
 ### Raspberry Pi 4B
+Make sure that the ubuntu version that is installed has all the newest dependencies:
+    
+    sudo apt-get update
+    sudo apt-get upgrade
 
 First, we need to enable serial communication on the RaspberryPi.
-For this, we open the configuration menu via
+For this, we open the first install and then open the configuration menu via
 
+    sudo apt-get install raspi-config
     sudo raspi-config
 
 Navigate to InterfaceOptions with the arrow keys, and hit Enter.
