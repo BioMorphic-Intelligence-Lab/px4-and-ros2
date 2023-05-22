@@ -64,7 +64,11 @@ For details, see the first part of [this](https://www.hackster.io/Matchstic/conn
 We created a Docker file that can be easily run on any ARM-based architecture that will take care of the communication on the RaspberryPi side. 
 If you're interested in how we created the docker file, do read on, otherwise, feel free to skip this section and simply use the docker file as described in the software section. 
 
-We use [Docker](https://www.docker.com/) to cross-compile an image for ARM-based systems on any other system. 
+We use [Docker](https://www.docker.com/) to cross-compile an image for ARM-based systems on any other system.
+Docker needs to be installed on the Pi via
+
+    sudo apt-get install docker.io
+
 For this, we define a docker file that specifies the recipe to create the desired image and then compile it. 
 The `micro-ros-agent` docker file can be accessed [here](./docker/Dockerfile).
 
