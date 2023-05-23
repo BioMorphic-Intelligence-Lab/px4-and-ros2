@@ -28,23 +28,28 @@ I recommend setting the parameters directly over the PX4 shell as setting it ove
 
 The parameters are documented on the [parameter reference](https://docs.px4.io/main/en/advanced_config/parameter_reference.html) site and the one we need for now is:
 
-    set param XRCE_DDS_CFG 102  # Turn on microdds_agent on startup and choose the right port (TELEM2)
-    set param SER_TEL2_BAUD 921600  # Set baud rate 
+    param set UXRCE_DDS_CFG 102  # Turn on microdds_agent on startup and choose the right port (TELEM2)
+    param set SER_TEL2_BAUD 921600  # Set baud rate 
 
 To take effect a restart is required. 
 We'll need to adjust some more parameters for various purposes but we'll get to that later.
 Once restarted you can check if the `microdds_agent` is running by default by trying to start it again via
 
-    microdds_client start -t serial -d /dev/ttyS3 -b 921600
+    uxrce_dds_client start -t serial -d /dev/ttyS3 -b 921600
 
 Which should result in a message that the client is already running. 
 In the above command `-t` defines the communication protocol (in this case `serial`), `-d` defines the device we're using to communicate (i.e. which port, where `/dev/ttyS3 == TELEM2` according to the [port mapping](https://docs.px4.io/main/en/flight_controller/pixhawk6c.html)), and `-d` defines the baud rate. 
 
 ### Raspberry Pi 4B
+Make sure that the ubuntu version that is installed has all the newest dependencies:
+    
+    sudo apt-get update
+    sudo apt-get upgrade
 
 First, we need to enable serial communication on the RaspberryPi.
-For this, we open the configuration menu via
+For this, we open the first install and then open the configuration menu via
 
+    sudo apt-get install raspi-config
     sudo raspi-config
 
 Navigate to InterfaceOptions with the arrow keys, and hit Enter.
@@ -53,13 +58,22 @@ Select No for the login shell and Yes for the serial port hardware.
 Hit Enter on the final prompt, which will take you back to the main menu.
 Navigate to the Finish button using the tab key, and hit Enter once more to exit.
 
-On some devices, you also need to deactivate bluetooth. 
-For details, see the first part of [this](https://www.hackster.io/Matchstic/connecting-pixhawk-to-raspberry-pi-and-nvidia-jetson-b263a7) tutorial.
+If your device has built in bluetooth devices (e.g. the RaspberryPi 4), you also need to deactivate it.
+For this add the following lines to the bottom of `/boot/firmware/config.txt`:
+
+    enable_uart=1
+    dtoverlay=disable-bt
+
+, and reboot the computer via `sudo reboot`.
 
 We created a Docker file that can be easily run on any ARM-based architecture that will take care of the communication on the RaspberryPi side. 
 If you're interested in how we created the docker file, do read on, otherwise, feel free to skip this section and simply use the docker file as described in the software section. 
 
-We use [Docker](https://www.docker.com/) to cross-compile an image for ARM-based systems on any other system. 
+We use [Docker](https://www.docker.com/) to cross-compile an image for ARM-based systems on any other system.
+Docker needs to be installed on the Pi via
+
+    sudo apt-get install docker.io
+
 For this, we define a docker file that specifies the recipe to create the desired image and then compile it. 
 The `micro-ros-agent` docker file can be accessed [here](./docker/Dockerfile).
 
