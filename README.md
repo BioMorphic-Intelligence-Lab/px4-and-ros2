@@ -82,11 +82,16 @@ You can compile the docker file with the following command
     docker buildx build --platform linux/arm64,linux/amd64 --push -t docker_username/image_name
 
 which will push the docker image to your docker repository. 
-On the companion computer you can then pull the docker image with
+On the companion computer, you can then pull the docker image with
 
     docker pull docker_username/image_name
 
-The ready-made docker image is available under `antbre/px4-uros-agent`
+aka given the provided pre-compiled image:
+
+    docker pull antbre/px4-uros-agent
+
+_Note_: The `ros2` base image is only available for `arm64` and _not_ `arm` architectures. Therefore the companion computer needs to run a 64 Bit based arch. E.g. an Ubuntu 22.04 server or Raspbian x64!
+
 After pulling this can be run with the following arguments:
 
     docker run --rm --net=host --privileged antbre/px4-uros-agent serial --dev /dev/ttyAMA0  -b 921600
