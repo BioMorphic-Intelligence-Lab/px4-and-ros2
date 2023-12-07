@@ -113,7 +113,9 @@ For testing purposes, it is fine to simply hook up both the Pixhawk and the Pi v
 
 ### Serial Connection
 
-To set up the serial connection you first need to solder the wire together. 
+To set up the serial connection you first need to solder the wire together. The key inside here is that we connect 
+- RPi TX <-> RX Pixhawk
+- RPi RX <-> TX Pixhawk
 You can find a detailed description of how to wire things up [here](https://www.hackster.io/Matchstic/connecting-pixhawk-to-raspberry-pi-and-nvidia-jetson-b263a7).
 Find a summary below:
 - Take one of the 6-port cables delivered with the pixhawk and hold it with the red wire to the right.
