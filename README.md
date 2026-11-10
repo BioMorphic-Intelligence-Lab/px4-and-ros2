@@ -185,6 +185,8 @@ For this, we first need to set some parameters:
         - `COM_ARM_WO_GPS = 1`
 - Turn off Magnetometer
     - `EKF2_MAG_TYPE  = 5`
+- Set height reference to Vision
+    - `EKF2_HGT_REF = 3`
 
 We turn off GPS, Barometer and Magnetometer since they usually decrease the estimation performance indoors whereas the MotionCapture estimate is very good.
 
